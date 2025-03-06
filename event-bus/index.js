@@ -7,10 +7,12 @@ const app=express()
 app.use(bodyParser.json())
 app.use(cors())
 
+const events=[];
 // forwarding events of post creation and comment creation to all + query service
 app.post('/events',(req,res)=>{
     const event=req.body;
 
+    events.push(event);
     axios.post('http://localhost:4000/events',event)
     axios.post('http://localhost:4001/events',event)
     axios.post('http://localhost:4002/events',event)
@@ -19,6 +21,9 @@ app.post('/events',(req,res)=>{
     res.send({status:'Ok'});
 })
 
+app.get('/events',(req,res)=>{
+    res.send(events);
+})
 app.listen(4005,()=>{
     console.log('Listening(event bus) on 4005');
 })
