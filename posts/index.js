@@ -41,5 +41,6 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4000, () => {
+  console.log("v2026");
   console.log("Listening POSTS on 4000");
 });
