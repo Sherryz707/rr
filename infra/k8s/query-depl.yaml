@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query # The Deployment selects Pods with this label
+  template:
+    metadata:
+      labels:
+        app: query # This label is added to every Pod created by this Deployment
+    spec:
+      containers:
+        - name: query
+          image: sherryz707/query:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv
+spec:
+  selector:
+    app: query
+  type: ClusterIP
+  ports:
+    - name: query
+      protocol: TCP
+      port: 4002
+      targetPort: 4002
